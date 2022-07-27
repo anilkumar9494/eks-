@@ -1,0 +1,47 @@
+vi sonar.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarqube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonarqube
+  template:
+    metadata:
+      labels:
+        app: sonarqube
+    spec:
+      containers:
+      - name: sonarqube
+        image: sonarqube:latest
+        ports:
+          - name: sonar
+            containerPort: 9000
+===
+kubectl apply -f sonar.yaml
+
+
+
+vi sonar-service.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarqube-service
+spec:
+  type: NodePort
+  ports:
+    - port: 9000
+      targetPort: 9000
+      nodePort:
+  selector:
+    app: sonarqube
+  type: LoadBalancer
+===
+kubectl apply -f sonar-service.yaml
+
+==
+kubectl get svc
