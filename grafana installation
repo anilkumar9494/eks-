@@ -1,0 +1,49 @@
+vi grafana.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana
+        ports:
+          - name: grafana
+            containerPort: 3000
+====
+kubectl apply -f grafana.yaml
+===
+
+
+vi grafana.service.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort:
+  selector:
+    app: grafana
+  type: LoadBalancer
+  
+  ====
+  kubectl apply -f grafana.service.yaml
+  ====
+  
+  $ kubectl get svc ( load balancer url:portnumber)
+  
