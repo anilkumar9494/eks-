@@ -39,7 +39,12 @@ spec:
     run: nginx
   type: LoadBalancer
   ===
-  kubectl apply -f nginx.svc.yaml
+  $ kubectl apply -f nginx.svc.yaml
   =====
-  kubectl get svc
+  $ kubectl get svc
+===
+$ kubectl delete pod (pod name)
+===
+$ kubectl delete svc (service name)
+
   
