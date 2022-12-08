@@ -1,0 +1,14 @@
+Deploying Nginx Container
+kubectl create deployment demo-nginx --image=nginx --replicas=2 --port=80
+# kubectl deployment regapp --image=saifshah/regapp --replicas=2 --
+port=8080
+kubectl get all
+kubectl get pod
+
+Expose the deployment as service. This will create an ELB in front of 
+those 2 containers and allow us to publicly access them.
+
+kubectl expose deployment demo-nginx --port=80 --type=LoadBalancer
+# kubectl expose deployment regapp --port=8080 --type=LoadBalancer
+
+kubectl get services -o wide
